@@ -35,15 +35,29 @@ function isInedit(point, listaAberta = fronteira) {
   return saida
 }
 
-function searchAdj(name, lista = pontos) {
-  let res = ''
+function searchAdj(point, lista = pontos) {
+  let res = null
+
   lista.map(item => {
-    if(item['nome'] == name) {
+    if(item['name'] == point['name']) {
       res = item
+      return
     }
   })
 
-  return item
+  return res
+}
+
+function maisProximo(points) {
+  points.map((point, index) => {
+    if (index == 0){
+      menor = point
+    } else if (distanceStraight(point, pontoFinal) < menor) {
+      menor = point
+    }
+  })
+
+  return menor
 }
 
 /* 
@@ -54,6 +68,7 @@ H: É o custo estimado de movimento para mover de determinado ponto até o ponto
 1- Adicionar o ponto inicial a LISTA ABERTA
 */
 
+let menor = null
 const fronteira = [] // Lista aberta
 const visitados = [] // lista fechada
 const destino = 5
