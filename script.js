@@ -52,7 +52,7 @@ function maisProximo(points) {
   points.map((point, index) => {
     if (index == 0){
       menor = point
-    } else if (distanceStraight(point, pontoFinal) < menor) {
+    } else if (distanceStraight(point, pontoFinal) < distanceStraight(menor, pontoFinal)) {
       menor = point
     }
   })
@@ -71,8 +71,7 @@ H: É o custo estimado de movimento para mover de determinado ponto até o ponto
 let menor = null
 const fronteira = [] // Lista aberta
 const visitados = [] // lista fechada
-const destino = 5
-let atual = 0
+
 
 fronteira.push(pontos[0])
 
