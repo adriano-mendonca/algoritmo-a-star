@@ -35,11 +35,11 @@ function isInedit(point, listaAberta = fronteira) {
   return saida
 }
 
-function searchAdj(point, lista = pontos) {
+function searchAdj(pointName, lista = pontos) {
   let res = null
 
   lista.map(item => {
-    if(item['name'] == point['name']) {
+    if(item['nome'] == pointName) {
       res = item
       return
     }
@@ -48,12 +48,16 @@ function searchAdj(point, lista = pontos) {
   return res
 }
 
-function maisProximo(points) {
-  points.map((point, index) => {
-    if (index == 0){
-      menor = point
-    } else if (distanceStraight(point, pontoFinal) < distanceStraight(menor, pontoFinal)) {
-      menor = point
+let pontoFinal = pontos[4]
+
+function maisProximo(points, destino) {
+  let menor = null
+
+  points.forEach((point, index) => {
+    if(index == 0){
+      menor = [point, distanceStraight(point, destino)]
+    } else if(menor < distanceStraight(point, destino)) {
+      menor = [point, distanceStraight(point, destino)]
     }
   })
 
@@ -71,21 +75,24 @@ H: É o custo estimado de movimento para mover de determinado ponto até o ponto
 let menor = null
 const fronteira = [] // Lista aberta
 const visitados = [] // lista fechada
+let atual = pontos[0]
+let listaAdjacentes = []
 
+atual['adjacentes'].forEach((adj, index) => {
+  listaAdjacentes.push(searchAdj(adj))
+})
 
-fronteira.push(pontos[0])
+console.log(maisProximo(listaAdjacentes, pontoFinal))
 
-atual = fronteira[0]
+atual = maisProximo(listaAdjacentes, pontoFinal)[0]
+listaAdjacentes= []
 
-if(atual['id'] == destino){
-  console.log('Chegou ao destino final')
-} else {
-  atual['adjacentes'].map(pontoAdjacente => {
-    if(isInedit(pontoAdjacente)){
-      fronteira.push(pontoAdjacente)
-    }
-  })
-}
+atual['adjacentes'].forEach((adj, index) => {
+  listaAdjacentes.push(searchAdj(adj))
+})
+
+console.log(maisProximo(listaAdjacentes, pontoFinal))
+
 
 // Calcular o custo
 // Ordernar pelo custo na lista aberta

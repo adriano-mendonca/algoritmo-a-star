@@ -1,46 +1,46 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "nome": "Elipse1",
-    "latitude": "-6.780097096609140",
-    "longitude": "-43.02610828104240",
-    "adjacentes": ["Elipse2, Elipse4, Elipse 16"],
+    "latitude": -6.780097096609140,
+    "longitude": -43.02610828104240,
+    "adjacentes": ["Elipse2", "Elipse4", "Elipse16"],
     "distancias": [109.58, 212.82, 257.95]
   },
   {
-    "id": 2,
+    "id": 1,
     "nome": "Elipse2",
-    "latitude": "-6.779702905678540",
-    "longitude": "-43.02695049471680",
-    "adjacentes": ["SaoJorge, Elipse1, Elipse 9"],
+    "latitude": -6.779702905678540,
+    "longitude": -43.02695049471680,
+    "adjacentes": ["SaoJorge", "Elipse1", "Elipse9"],
     "distancias": [103.67, 109.58, 288.55]
   },
   {
-    "id": 3,
+    "id": 2,
     "nome": "SaoJorge",
     "latitude": "-6.779361983532620",
     "longitude": "-43.0277819795545",
-    "adjacentes": ["Elipse2, Elipse3"],
+    "adjacentes": ["Elipse2", "Elipse3"],
     "distancias": [103.67, 76.23]
   },
   {
-    "id": 4,
+    "id": 3,
     "nome": "Elipse3",
     "latitude": "-6.779122272504390",
     "longitude": "-43.0283667011501",
-    "adjacentes": ["SaoJorge, Elipse10"],
+    "adjacentes": ["SaoJorge", "Elipse10"],
     "distancias": [76.23, 211.6]
   },
   {
-    "id": 5,
+    "id": 4,
     "nome": "Elipse4",
     "latitude": "-6.778561128264050",
     "longitude": "-43.02502053059330",
-    "adjacentes": ["Elipse5, Elipse13, Elipse1"],
+    "adjacentes": ["Elipse5", "Elipse13", "Elipse1"],
     "distancias": [101.94, 190.46, 212.82]
   },
   {
-    "id": 6,
+    "id": 5,
     "nome": "Elipse22",
     "latitude": "-6.77690477600302",
     "longitude": "-43.02256037197320",
@@ -48,7 +48,7 @@
     "distancias": [106.65, 98.93]
   },
   {
-    "id": 7,
+    "id": 6,
     "nome": "Elipse20",
     "latitude": "-6.777781572748660",
     "longitude": "-43.0225718263076",
@@ -56,7 +56,7 @@
     "distancias": [104.23, 101.58, 115.6]
   },
   {
-    "id": 8,
+    "id": 7,
     "nome": "Elipse19",
     "latitude": "-6.778836989844450",
     "longitude": "-43.02255040703930",
@@ -64,7 +64,7 @@
     "distancias": [111.44, 120.03]
   },
   {
-    "id": 9,
+    "id": 8,
     "nome": "Elipse18",
     "latitude": "-6.77986530848285",
     "longitude": "-43.022535071835",
@@ -72,7 +72,7 @@
     "distancias": [115.61, 76.3]
   },
   {
-    "id": 10,
+    "id": 9,
     "nome": "Elipse23",
     "latitude": "-6.77986530848285",
     "longitude": "-43.022535071835",
@@ -80,7 +80,7 @@
     "distancias": [117.47, 95, 77.95]
   },
   {
-    "id": 11,
+    "id": 10,
     "nome": "Elipse21",
     "latitude": "-6.781680849928630",
     "longitude": "-43.02242127534280",
@@ -88,7 +88,7 @@
     "distancias": [117.42, 64.25]
   },
   {
-    "id": 12,
+    "id": 11,
     "nome": "Elipse17",
     "latitude": "-6.781439782581850",
     "longitude": "-43.02299784422690",
@@ -96,7 +96,7 @@
     "distancias": [42.27, 50.24]
   },
   {
-    "id": 13,
+    "id": 12,
     "nome": "Elipse15",
     "latitude": "-6.781334315579710",
     "longitude": "-43.02334682013040",
@@ -104,7 +104,7 @@
     "distancias": [31, 79, 71.02]
   },
   {
-    "id": 14,
+    "id": 13,
     "nome": "Elipse14",
     "latitude": "-6.780709046450010",
     "longitude": "-43.0233847522938",
@@ -112,7 +112,7 @@
     "distancias": [71.02, 89.7]
   },
   {
-    "id": 15,
+    "id": 14,
     "nome": "Elipse13",
     "latitude": "-6.77931537137403",
     "longitude": "-43.02346820305330",
@@ -120,7 +120,7 @@
     "distancias": [190.46, 182.93, 152.01]
   },
   {
-    "id": 16,
+    "id": 15,
     "nome": "Elipse11",
     "latitude": "-6.777635422505180",
     "longitude": "-43.0235288945146",
@@ -128,7 +128,7 @@
     "distancias": [130.2, 67.87, 101.91]
   },
   {
-    "id": 17,
+    "id": 16,
     "nome": "Elipse12",
     "latitude": "-6.77694234774088",
     "longitude": "-43.0235137216492",
@@ -136,7 +136,7 @@
     "distancias": [137.44, 77.07, 103.2]
   },
   {
-    "id": 18,
+    "id": 17,
     "nome": "Elipse7",
     "latitude": "-6.777019305689095",
     "longitude": "-43.02476298298146",
@@ -144,7 +144,7 @@
     "distancias": [298.79, 75.56, 141.94]
   },
   {
-    "id": 19,
+    "id": 18,
     "nome": "Esquina5",
     "latitude": "-6.777673297885009",
     "longitude": "-43.02472689562256",
@@ -152,7 +152,7 @@
     "distancias": [101.94, 75.56, 136.47]
   },
   {
-    "id": 20,
+    "id": 19,
     "nome": "Elipse8",
     "latitude": "-6.777183046976975",
     "longitude": "-43.026225809307725",
@@ -160,7 +160,7 @@
     "distancias": [129.23, 298.79]
   },
   {
-    "id": 21,
+    "id": 20,
     "nome": "Elipse9",
     "latitude": "-6.77718837391144",
     "longitude": "-43.02736843034098",
@@ -168,7 +168,7 @@
     "distancias": [129.42, 288.55, 129.23]
   },
   {
-    "id": 22,
+    "id": 21,
     "nome": "Elipse10",
     "latitude": "-6.7772469701855975",
     "longitude": "-43.02850568695823",
@@ -176,7 +176,7 @@
     "distancias": [205.62, 118.25]
   },
   {
-    "id": 23,
+    "id": 22,
     "nome": "Elipse16",
     "latitude": "-6.781054374373059",
     "longitude": "-43.023997547829545",
