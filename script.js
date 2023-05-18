@@ -1,112 +1,83 @@
-const fs = require('fs')
+const fs = require('fs');
 
-const pontosJSON = fs.readFileSync('./pontos.json')
+const pontosJSON = fs.readFileSync('./pontos.json');
 
-const pontos = JSON.parse(pontosJSON)
+const pontos = JSON.parse(pontosJSON);
 
 function toRadians(graus) {
   return (graus * Math.PI) / 180;
 }
 
-function distanceStraight(point1, point2) {
+function distanceStraight(spot1, spot2) {
+  //Distância em linha reta entre dois pontos
   const R = 6371; // Raio médio da Terra em quilômetros
 
-  const dLat = toRadians(point2['latitude'] - point1['latitude']);
-  const dLon = toRadians(point2['longitude'] - point1['longitude']);
+  const dLat = toRadians(spot2['latitude'] - spot1['latitude']);
+  const dLon = toRadians(spot2['longitude'] - spot1['longitude']);
 
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(toRadians(point1['latitude'])) * Math.cos(toRadians(point2['latitude'])) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(spot1['latitude'])) *
+      Math.cos(toRadians(spot2['latitude'])) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distancia = R * c * 1000; // Distância em metros
   return distancia;
 }
 
-function isInedit(point, listaAberta = fronteira) {
-  let saida = true;
-  listaAberta.map(item => {
-    if(item['id'] == point['id']){
-      saida = false
-      return
+function isInedit(spot, openList = fronteira) {
+  //Vefica se é inedito na fronteira
+  let exit = true;
+  openList.map((point) => {
+    if (point['id'] == spot['id']) {
+      exit = false;
+      return;
     }
-  })
+  });
 
-  return saida
+  return exit;
 }
 
-function searchAdjs(points, lista = pontos) {
-  let res = []
+function searchAdjs(points, list = pontos) {
+  //Busca todos os adjacentes na lista principal
+  let result = [];
 
-  points.forEach(point => {
-    lista.forEach(ponto => {
-      if (point == ponto['nome']){
-        res.push(ponto)
+  points.forEach((point) => {
+    list.forEach((spot) => {
+      if (point == spot['nome']) {
+        result.push(spot);
       }
-    })
-  })
+    });
+  });
 
-  return res
+  return result;
 }
 
-function maisProximo(points, destino) {
-  let menor = null
-
+function closer(points, destiny) {
+  // Busca o mais próximo em relação ao ponto final
+  let smaller = null;
   points.forEach((point, index) => {
-    if(index == 0){
-      menor = [point, distanceStraight(point, destino)]
-    } else if(menor < distanceStraight(point, destino)) {
-      menor = [point, distanceStraight(point, destino)]
+    if (index == 0) {
+      smaller = [point, distanceStraight(point, destiny)];
+    } else if (smaller < distanceStraight(point, destiny)) {
+      smaller = [point, distanceStraight(point, destiny)];
     }
-  })
-
-  return menor
+  });
+  return smaller;
 }
 
-/* 
-A chave para determinar quais pontos usar quando estiver procurando o caminho é:
-F = G + H
-G: é o custo do movimento. Ou seja, a distância entre os pontos
-H: É o custo estimado de movimento para mover de determinado ponto até o ponto final.
-1- Adicionar o ponto inicial a LISTA ABERTA
-*/
+function removePoint(wantedPoint, list = fronteira) {
+  //
+  list.forEach((point, index) => {
+    if (point['id'] == wantedPoint['id']) {
+      list.splice(index, 1);
+    }
+  });
+}
 
-const fronteira = [] // Lista aberta
-const visitados = [] // lista fechada
-
-let pontoInicial = pontos[0]
-let pontoFinal = pontos[22]
-let pontoAtual = pontoInicial
-let adjacentes = []
-let adjMaisProximo = []
-fronteira.push(pontoInicial)
-
-while(true){
-  if(fronteira.length == 0){
-    console.log('Busca finalizado sem solução!')
-    break
-  } else if(pontoAtual['id'] == pontoFinal['id']){
-    console.log('Busca finalizada com solução')
-    break
-  } else {
-    adjacentes = searchAdjs(pontoAtual['adjacentes'])
-    adjMaisProximo = maisProximo(adjacentes, pontoFinal)[0]
-
-    console.log(adjMaisProximo)
-    //Adicionar no início da lista aberta
-    adjacentes.forEach(ponto => {
-      fronteira.unshift(ponto)
-    })
-
-    // Adicionar na lista fechada
-    visitados.push(adjMaisProximo)
-
-    // Remover da lista aberta
-    fronteira.forEach((ponto,index) => {
-      if(ponto['id'] == adjMaisProximo['id']){
-        fronteira.splice(index, 1)
-      }
-    })
-    adjacentes = []
-    pontoAtual = adjMaisProximo
-}}
+function sortList(list) {
+  //Ordena a fronteira
+  return list.sort((a, b) => a.f - b.f);
+}
