@@ -35,20 +35,19 @@ function isInedit(point, listaAberta = fronteira) {
   return saida
 }
 
-function searchAdj(pointName, lista = pontos) {
-  let res = null
+function searchAdjs(points, lista = pontos) {
+  let res = []
 
-  lista.map(item => {
-    if(item['nome'] == pointName) {
-      res = item
-      return
-    }
+  points.forEach(point => {
+    lista.forEach(ponto => {
+      if (point == ponto['nome']){
+        res.push(ponto)
+      }
+    })
   })
 
   return res
 }
-
-let pontoFinal = pontos[4]
 
 function maisProximo(points, destino) {
   let menor = null
@@ -72,44 +71,42 @@ H: É o custo estimado de movimento para mover de determinado ponto até o ponto
 1- Adicionar o ponto inicial a LISTA ABERTA
 */
 
-let menor = null
 const fronteira = [] // Lista aberta
 const visitados = [] // lista fechada
-let atual = pontos[0]
-let listaAdjacentes = []
 
-atual['adjacentes'].forEach((adj, index) => {
-  listaAdjacentes.push(searchAdj(adj))
-})
+let pontoInicial = pontos[0]
+let pontoFinal = pontos[22]
+let pontoAtual = pontoInicial
+let adjacentes = []
+let adjMaisProximo = []
+fronteira.push(pontoInicial)
 
-console.log(maisProximo(listaAdjacentes, pontoFinal))
+while(true){
+  if(fronteira.length == 0){
+    console.log('Busca finalizado sem solução!')
+    break
+  } else if(pontoAtual['id'] == pontoFinal['id']){
+    console.log('Busca finalizada com solução')
+    break
+  } else {
+    adjacentes = searchAdjs(pontoAtual['adjacentes'])
+    adjMaisProximo = maisProximo(adjacentes, pontoFinal)[0]
 
-atual = maisProximo(listaAdjacentes, pontoFinal)[0]
-listaAdjacentes= []
+    console.log(adjMaisProximo)
+    //Adicionar no início da lista aberta
+    adjacentes.forEach(ponto => {
+      fronteira.unshift(ponto)
+    })
 
-atual['adjacentes'].forEach((adj, index) => {
-  listaAdjacentes.push(searchAdj(adj))
-})
+    // Adicionar na lista fechada
+    visitados.push(adjMaisProximo)
 
-console.log(maisProximo(listaAdjacentes, pontoFinal))
-
-
-// Calcular o custo
-// Ordernar pelo custo na lista aberta
-
-/*
-2- Procurar o menor custo F na LISTA ABERTA
- - Mover para a LISTA FECHADA
- - Para cada ponto adjacente {
-  Se não é passável ou se tiver na lista fechada, ignore.
-  Caso contrário {
-    Se não estiver na lista aberta, adicione-o. Faça o ponto atual o pai deste. Grave os custos F, G e H do ponto.
-    Se já estiver na lista aberta, confere para ver se este caminho para aquele ponto é melhor, usando o custo G como medida. Um valor G mais baixo mostra que este é um caminho melhor. Nesse caso, mude o pai do ponto para o ponto atual, e recalcule os valores de G e F do ponto. Se você está mantendo sua lista aberta ordenada por F, você pode precisar reordenar a lista para corresponder a mudança.
-  }
-  Pare quando {
-    Acrescente o ponto alvo à lista fechada o que determina oque o caminho foi achado ou,
-    Não ache o quadrado alvo, e a lista aberta está vazia.
-  }
- }
-3- Salve o caminho. Caminhando para trás do ponto alvo, vá de cada ponto a seu ponto pai até que você alcance o ponto inicial. 
-*/
+    // Remover da lista aberta
+    fronteira.forEach((ponto,index) => {
+      if(ponto['id'] == adjMaisProximo['id']){
+        fronteira.splice(index, 1)
+      }
+    })
+    adjacentes = []
+    pontoAtual = adjMaisProximo
+}}
