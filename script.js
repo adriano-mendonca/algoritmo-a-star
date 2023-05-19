@@ -8,7 +8,7 @@ function toRadians(graus) {
   return (graus * Math.PI) / 180;
 }
 
-function distanceStraight(spot1, spot2 = pontoFinal) {
+function distanceStraight(spot1, spot2) {
   //Distância em linha reta entre dois pontos
   const R = 6371; // Raio médio da Terra em quilômetros
 
@@ -24,68 +24,85 @@ function distanceStraight(spot1, spot2 = pontoFinal) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distancia = R * c * 1000; // Distância em metros
-  return distancia.toFixed(2);
+  return parseFloat(distancia.toFixed(2));
 }
 
-function isInedit(spot, openList) {
-  //Vefica se é inedito na fronteira
-  let exit = true;
-  openList.map((point) => {
-    if (point['id'] == spot['id']) {
-      exit = false;
-      return;
+function findPoint(name) {
+  return pontos.find(point => point['nome'] === name)
+}
+
+function findF(openList) {
+  let minF = openList[0]
+  openList.forEach(point => {
+    if(point['f'] < minF['f']) {
+      minF = point
     }
-  });
-
-  return exit;
-}
-
-function searchAdjs(points, list = pontos) {
-  //Busca todos os adjacentes na lista principal
-  return list.filter(spot => points.includes(spot['nome']));
-}
-
-function closer(points, destiny) {
-  // Busca o mais próximo em relação ao ponto final
-  let smaller = null;
-  points.forEach((point, index) => {
-    if (index == 0) {
-      smaller = [point, distanceStraight(point, destiny)];
-    } else if (distanceStraight(point, destiny) < smaller[1]) {
-      smaller = [point, distanceStraight(point, destiny)];
-    }
-  });
-  return smaller;
-}
-
-function removePoint(wantedPoint, list = fronteira) {
-  //
-  list.forEach((point, index) => {
-    if (point['id'] == wantedPoint['id']) {
-      list.splice(index, 1);
-    }
-  });
-}
-
-function sortList(list) {
-  //Ordena a fronteira
-  return list.sort((a, b) => a.f - b.f);
-}
-
-function evaluation(point1, point2) {
-  let g = null
-  const h = parseFloat(distanceStraight(point1))
-  point1['adjacentes'].forEach((point, index) => {
-    if(point === point2['nome']){
-      g = point2['distancias'][index]
-    }
-    return
   })
 
-  const f = parseFloat((g + h).toFixed(2))
-  return {...point1, h, g, f}
+  return minF
 }
 
-let pontoInicial = pontos[0]
-let pontoFinal = pontos[1]
+function refazerCaminho(cameFrom, current) {
+  const path = [current];
 
+  while(cameFrom[current['nome']]) {
+    current = cameFrom[current['nome']]
+    path.unshift(current)
+  }
+
+  return path
+}
+
+function aStar(start, destination) {
+  const openList = [start]
+  const closedList = []
+  const cameFrom = {}
+
+  start['g'] = 0
+  start['h'] = distanceStraight(start, destination)
+  start['f'] = start['g'] + start['h']
+
+  while(openList.length > 0) {
+    const current = findF(openList)
+
+    if(current['nome'] === destination['nome']) {
+      const path = refazerCaminho(cameFrom, current);
+      return path;
+    }
+
+    openList.splice(openList.indexOf(current), 1);
+    closedList.push(current);
+
+    const adjacentes = current['adjacentes'];
+
+    adjacentes.forEach(adjacente => {
+      const neighbor = findPoint(adjacente);
+
+      if (closedList.includes(neighbor)) {
+        return;
+      }
+
+      const tentativeG = current['g'] + distanceStraight(current, neighbor);
+
+      if (!openList.includes(neighbor)) {
+        openList.push(neighbor);
+      } else if (tentativeG >= neighbor['g']) {
+        return;
+      }
+
+      cameFrom[neighbor['nome']] = current;
+      neighbor['g'] = tentativeG;
+      neighbor['h'] = distanceStraight(neighbor, destination);
+      neighbor['f'] = neighbor['g'] + neighbor['h'];
+    });
+  }
+
+  return null; // Não foi encontrado caminho
+}
+
+// Definição do ponto de partida e ponto de destino
+const pontoInicial = findPoint('Elipse1');
+const pontoFinal = findPoint('Elipse2');
+
+const caminho = aStar(pontoInicial, pontoFinal);
+console.log(caminho);
