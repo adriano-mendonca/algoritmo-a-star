@@ -38,7 +38,6 @@ function findF(openList) {
       minF = point
     }
   })
-
   return minF
 }
 
@@ -66,8 +65,8 @@ function aStar(start, destination) {
     const atual = findF(openList)
 
     if(atual['nome'] === destination['nome']) {
-      const path = refazerCaminho(cameFrom, atual);
-      return path;
+      const caminho = refazerCaminho(cameFrom, atual);
+      return caminho;
     }
 
     openList.splice(openList.indexOf(atual), 1);
