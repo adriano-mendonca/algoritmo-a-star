@@ -101,7 +101,7 @@ function aStar(start, destination) {
 
 // Definição do ponto de partida e ponto de destino
 const pontoInicial = findPoint('Elipse1');
-const pontoFinal = findPoint('Elipse10');
+const pontoFinal = findPoint('Elipse7');
 
 
 const caminho = aStar(pontoInicial, pontoFinal);

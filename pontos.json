@@ -36,7 +36,7 @@
     "nome": "Elipse5",
     "latitude": -6.778561128264050,
     "longitude": -43.02502053059330,
-    "adjacentes": ["Elipse6", "Elipse13", "Elipse1"],
+    "adjacentes": ["Esquina5", "Elipse13", "Elipse1"],
     "distancias": [101.94, 190.46, 212.82]
   },
   {
