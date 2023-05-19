@@ -4,7 +4,7 @@
     "nome": "Elipse1",
     "latitude": -6.780097096609140,
     "longitude": -43.02610828104240,
-    "adjacentes": ["Elipse2", "Elipse4", "Elipse16"],
+    "adjacentes": ["Elipse2", "Elipse5", "Elipse16"],
     "distancias": [109.58, 212.82, 257.95]
   },
   {
@@ -33,10 +33,10 @@
   },
   {
     "id": 4,
-    "nome": "Elipse4",
+    "nome": "Elipse5",
     "latitude": -6.778561128264050,
     "longitude": -43.02502053059330,
-    "adjacentes": ["Elipse5", "Elipse13", "Elipse1"],
+    "adjacentes": ["Elipse6", "Elipse13", "Elipse1"],
     "distancias": [101.94, 190.46, 212.82]
   },
   {
@@ -116,7 +116,7 @@
     "nome": "Elipse13",
     "latitude": -6.77931537137403,
     "longitude": -43.02346820305330,
-    "adjacentes": ["Esquina4", "Elipse11", "Elipse14"],
+    "adjacentes": ["Elipse5", "Elipse11", "Elipse14"],
     "distancias": [190.46, 182.93, 152.01]
   },
   {
@@ -148,7 +148,7 @@
     "nome": "Esquina5",
     "latitude": -6.777673297885009,
     "longitude": -43.02472689562256,
-    "adjacentes": ["Esquina4", "Elipse7", "Elipse11"],
+    "adjacentes": ["Elipse5", "Elipse7", "Elipse11"],
     "distancias": [101.94, 75.56, 136.47]
   },
   {

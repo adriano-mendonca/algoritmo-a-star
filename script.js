@@ -42,15 +42,15 @@ function findF(openList) {
   return minF
 }
 
-function refazerCaminho(cameFrom, current) {
-  const path = [current];
+function refazerCaminho(cameFrom, atual) {
+  const caminho = [atual];
 
-  while(cameFrom[current['nome']]) {
-    current = cameFrom[current['nome']]
-    path.unshift(current)
+  while(cameFrom[atual['nome']]) {
+    atual = cameFrom[atual['nome']]
+    caminho.unshift(atual)
   }
 
-  return path
+  return caminho
 }
 
 function aStar(start, destination) {
@@ -63,37 +63,37 @@ function aStar(start, destination) {
   start['f'] = start['g'] + start['h']
 
   while(openList.length > 0) {
-    const current = findF(openList)
+    const atual = findF(openList)
 
-    if(current['nome'] === destination['nome']) {
-      const path = refazerCaminho(cameFrom, current);
+    if(atual['nome'] === destination['nome']) {
+      const path = refazerCaminho(cameFrom, atual);
       return path;
     }
 
-    openList.splice(openList.indexOf(current), 1);
-    closedList.push(current);
+    openList.splice(openList.indexOf(atual), 1);
+    closedList.push(atual);
 
-    const adjacentes = current['adjacentes'];
+    const adjacentes = atual['adjacentes'];
 
     adjacentes.forEach(adjacente => {
-      const neighbor = findPoint(adjacente);
+      const vizinho = findPoint(adjacente);
 
-      if (closedList.includes(neighbor)) {
+      if (closedList.includes(vizinho)) {
         return;
       }
 
-      const tentativeG = current['g'] + distanceStraight(current, neighbor);
+      const tentativaG = atual['g'] + distanceStraight(atual, vizinho);
 
-      if (!openList.includes(neighbor)) {
-        openList.push(neighbor);
-      } else if (tentativeG >= neighbor['g']) {
+      if (!openList.includes(vizinho)) {
+        openList.push(vizinho);
+      } else if (tentativaG >= vizinho['g']) {
         return;
       }
 
-      cameFrom[neighbor['nome']] = current;
-      neighbor['g'] = tentativeG;
-      neighbor['h'] = distanceStraight(neighbor, destination);
-      neighbor['f'] = neighbor['g'] + neighbor['h'];
+      cameFrom[vizinho['nome']] = atual;
+      vizinho['g'] = tentativaG;
+      vizinho['h'] = distanceStraight(vizinho, destination);
+      vizinho['f'] = vizinho['g'] + vizinho['h'];
     });
   }
 
@@ -102,7 +102,8 @@ function aStar(start, destination) {
 
 // Definição do ponto de partida e ponto de destino
 const pontoInicial = findPoint('Elipse1');
-const pontoFinal = findPoint('Elipse2');
+const pontoFinal = findPoint('Elipse10');
+
 
 const caminho = aStar(pontoInicial, pontoFinal);
 console.log(caminho);
