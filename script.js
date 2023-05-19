@@ -8,7 +8,7 @@ function toRadians(graus) {
   return (graus * Math.PI) / 180;
 }
 
-function distanceStraight(spot1, spot2) {
+function distanceStraight(spot1, spot2 = pontoFinal) {
   //Distância em linha reta entre dois pontos
   const R = 6371; // Raio médio da Terra em quilômetros
 
@@ -24,10 +24,10 @@ function distanceStraight(spot1, spot2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distancia = R * c * 1000; // Distância em metros
-  return distancia;
+  return distancia.toFixed(2);
 }
 
-function isInedit(spot, openList = fronteira) {
+function isInedit(spot, openList) {
   //Vefica se é inedito na fronteira
   let exit = true;
   openList.map((point) => {
@@ -42,17 +42,7 @@ function isInedit(spot, openList = fronteira) {
 
 function searchAdjs(points, list = pontos) {
   //Busca todos os adjacentes na lista principal
-  let result = [];
-
-  points.forEach((point) => {
-    list.forEach((spot) => {
-      if (point == spot['nome']) {
-        result.push(spot);
-      }
-    });
-  });
-
-  return result;
+  return list.filter(spot => points.includes(spot['nome']));
 }
 
 function closer(points, destiny) {
@@ -61,7 +51,7 @@ function closer(points, destiny) {
   points.forEach((point, index) => {
     if (index == 0) {
       smaller = [point, distanceStraight(point, destiny)];
-    } else if (smaller < distanceStraight(point, destiny)) {
+    } else if (distanceStraight(point, destiny) < smaller[1]) {
       smaller = [point, distanceStraight(point, destiny)];
     }
   });
@@ -81,3 +71,21 @@ function sortList(list) {
   //Ordena a fronteira
   return list.sort((a, b) => a.f - b.f);
 }
+
+function evaluation(point1, point2) {
+  let g = null
+  const h = parseFloat(distanceStraight(point1))
+  point1['adjacentes'].forEach((point, index) => {
+    if(point === point2['nome']){
+      g = point2['distancias'][index]
+    }
+    return
+  })
+
+  const f = parseFloat((g + h).toFixed(2))
+  return {...point1, h, g, f}
+}
+
+let pontoInicial = pontos[0]
+let pontoFinal = pontos[1]
+
